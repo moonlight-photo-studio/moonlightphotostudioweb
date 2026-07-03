@@ -15,11 +15,15 @@
             --card-bg: #f9f9f9;
             --border-color: #eeeeee;
             
-            /* Dynamic Gallery Theme (Toggled via Discover button) */
+            /* Dynamic Gallery Theme (Toggled via Discover button / Scroll) */
             --gallery-bg: #ffffff;
             --gallery-text: #111111;
             --gallery-muted: #767676;
             --star-color: rgba(241, 184, 78, 0.2);
+
+            /* Header Specific Variables */
+            --header-bg: rgba(255, 255, 255, 0.95);
+            --header-text: #111111;
         }
 
         /* Dark Mode variables for the Gallery Section */
@@ -29,6 +33,13 @@
             --gallery-muted: #a0a0a6;
             --border-color: #222226;
             --star-color: rgba(255, 255, 255, 0.75);
+        }
+
+        /* Header Dark Theme Class */
+        header.dark-header {
+            --header-bg: rgba(13, 13, 15, 0.95);
+            --header-text: #ffffff;
+            border-bottom: 1px solid #222226;
         }
 
         * {
@@ -86,10 +97,13 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 30px 8%;
-            background-color: rgba(255, 255, 255, 0.95);
+            padding: 25px 8%;
+            background-color: var(--header-bg);
+            color: var(--header-text);
             backdrop-filter: blur(10px);
             z-index: 1000;
+            border-bottom: 1px solid transparent;
+            transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease;
         }
 
         .logo {
@@ -107,10 +121,10 @@
 
         nav ul li a {
             text-decoration: none;
-            color: var(--text-color);
+            color: var(--header-text);
             font-size: 0.9rem;
             font-weight: 500;
-            transition: color 0.3s;
+            transition: color 0.3s ease;
         }
 
         nav ul li a:hover {
@@ -285,20 +299,6 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-        }
-
-        .img-placeholder-text {
-            position: absolute;
-            bottom: 15px;
-            left: 15px;
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(4px);
-            color: #ffffff;
-            padding: 4px 12px;
-            border-radius: 4px;
-            font-size: 0.75rem;
-            font-weight: 500;
-            pointer-events: none;
         }
 
         /* --- LIGHTBOX MODAL --- */
@@ -503,7 +503,7 @@
 <body>
 
     <!-- NAVIGATION HEADER -->
-    <header>
+    <header id="mainHeader">
         <div class="logo">Moonlight</div>
         <nav>
             <ul>
@@ -546,15 +546,15 @@
                     <span>9 Showcase Items</span>
                 </div>
                 <div class="carousel">
-                    <div class="carousel-item"><img src="images/Pre-nup/prenup1.jpg" alt="Pre-nup 1"><div class="img-placeholder-text">prenup1.jpg</div></div>
-                    <div class="carousel-item"><img src="images/Pre-nup/prenup2.jpg" alt="Pre-nup 2"><div class="img-placeholder-text">prenup2.jpg</div></div>
-                    <div class="carousel-item"><img src="images/Pre-nup/prenup3.jpg" alt="Pre-nup 3"><div class="img-placeholder-text">prenup3.jpg</div></div>
-                    <div class="carousel-item"><img src="images/Pre-nup/prenup4.jpg" alt="Pre-nup 4"><div class="img-placeholder-text">prenup4.jpg</div></div>
-                    <div class="carousel-item"><img src="images/Pre-nup/prenup5.jpg" alt="Pre-nup 5"><div class="img-placeholder-text">prenup5.jpg</div></div>
-                    <div class="carousel-item"><img src="images/Pre-nup/prenup6.jpg" alt="Pre-nup 6"><div class="img-placeholder-text">prenup6.jpg</div></div>
-                    <div class="carousel-item"><img src="images/Pre-nup/prenup7.jpg" alt="Pre-nup 7"><div class="img-placeholder-text">prenup7.jpg</div></div>
-                    <div class="carousel-item"><img src="images/Pre-nup/prenup8.jpg" alt="Pre-nup 8"><div class="img-placeholder-text">prenup8.jpg</div></div>
-                    <div class="carousel-item"><img src="images/Pre-nup/prenup9.jpg" alt="Pre-nup 9"><div class="img-placeholder-text">prenup9.jpg</div></div>
+                    <div class="carousel-item"><img src="images/Pre-nup/prenup1.jpg" alt="Pre-nup 1"></div>
+                    <div class="carousel-item"><img src="images/Pre-nup/prenup2.jpg" alt="Pre-nup 2"></div>
+                    <div class="carousel-item"><img src="images/Pre-nup/prenup3.jpg" alt="Pre-nup 3"></div>
+                    <div class="carousel-item"><img src="images/Pre-nup/prenup4.jpg" alt="Pre-nup 4"></div>
+                    <div class="carousel-item"><img src="images/Pre-nup/prenup5.jpg" alt="Pre-nup 5"></div>
+                    <div class="carousel-item"><img src="images/Pre-nup/prenup6.jpg" alt="Pre-nup 6"></div>
+                    <div class="carousel-item"><img src="images/Pre-nup/prenup7.jpg" alt="Pre-nup 7"></div>
+                    <div class="carousel-item"><img src="images/Pre-nup/prenup8.jpg" alt="Pre-nup 8"></div>
+                    <div class="carousel-item"><img src="images/Pre-nup/prenup9.jpg" alt="Pre-nup 9"></div>
                 </div>
             </div>
 
@@ -565,20 +565,20 @@
                     <span>14 Showcase Items</span>
                 </div>
                 <div class="carousel">
-                    <div class="carousel-item"><img src="images/Maternity/maternity1.jpg" alt="Maternity 1"><div class="img-placeholder-text">maternity1.jpg</div></div>
-                    <div class="carousel-item"><img src="images/Maternity/maternity2.jpg" alt="Maternity 2"><div class="img-placeholder-text">maternity2.jpg</div></div>
-                    <div class="carousel-item"><img src="images/Maternity/maternity3.jpg" alt="Maternity 3"><div class="img-placeholder-text">maternity3.jpg</div></div>
-                    <div class="carousel-item"><img src="images/Maternity/maternity4.jpg" alt="Maternity 4"><div class="img-placeholder-text">maternity4.jpg</div></div>
-                    <div class="carousel-item"><img src="images/Maternity/maternity5.jpg" alt="Maternity 5"><div class="img-placeholder-text">maternity5.jpg</div></div>
-                    <div class="carousel-item"><img src="images/Maternity/maternity6.jpg" alt="Maternity 6"><div class="img-placeholder-text">maternity6.jpg</div></div>
-                    <div class="carousel-item"><img src="images/Maternity/maternity7.jpg" alt="Maternity 7"><div class="img-placeholder-text">maternity7.jpg</div></div>
-                    <div class="carousel-item"><img src="images/Maternity/maternity8.jpg" alt="Maternity 8"><div class="img-placeholder-text">maternity8.jpg</div></div>
-                    <div class="carousel-item"><img src="images/Maternity/maternity9.jpg" alt="Maternity 9"><div class="img-placeholder-text">maternity9.jpg</div></div>
-                    <div class="carousel-item"><img src="images/Maternity/maternity10.jpg" alt="Maternity 10"><div class="img-placeholder-text">maternity10.jpg</div></div>
-                    <div class="carousel-item"><img src="images/Maternity/maternity11.jpg" alt="Maternity 11"><div class="img-placeholder-text">maternity11.jpg</div></div>
-                    <div class="carousel-item"><img src="images/Maternity/maternity12.jpg" alt="Maternity 12"><div class="img-placeholder-text">maternity12.jpg</div></div>
-                    <div class="carousel-item"><img src="images/Maternity/maternity13.jpg" alt="Maternity 13"><div class="img-placeholder-text">maternity13.jpg</div></div>
-                    <div class="carousel-item"><img src="images/Maternity/maternity14.jpg" alt="Maternity 14"><div class="img-placeholder-text">maternity14.jpg</div></div>
+                    <div class="carousel-item"><img src="images/Maternity/maternity1.jpg" alt="Maternity 1"></div>
+                    <div class="carousel-item"><img src="images/Maternity/maternity2.jpg" alt="Maternity 2"></div>
+                    <div class="carousel-item"><img src="images/Maternity/maternity3.jpg" alt="Maternity 3"></div>
+                    <div class="carousel-item"><img src="images/Maternity/maternity4.jpg" alt="Maternity 4"></div>
+                    <div class="carousel-item"><img src="images/Maternity/maternity5.jpg" alt="Maternity 5"></div>
+                    <div class="carousel-item"><img src="images/Maternity/maternity6.jpg" alt="Maternity 6"></div>
+                    <div class="carousel-item"><img src="images/Maternity/maternity7.jpg" alt="Maternity 7"></div>
+                    <div class="carousel-item"><img src="images/Maternity/maternity8.jpg" alt="Maternity 8"></div>
+                    <div class="carousel-item"><img src="images/Maternity/maternity9.jpg" alt="Maternity 9"></div>
+                    <div class="carousel-item"><img src="images/Maternity/maternity10.jpg" alt="Maternity 10"></div>
+                    <div class="carousel-item"><img src="images/Maternity/maternity11.jpg" alt="Maternity 11"></div>
+                    <div class="carousel-item"><img src="images/Maternity/maternity12.jpg" alt="Maternity 12"></div>
+                    <div class="carousel-item"><img src="images/Maternity/maternity13.jpg" alt="Maternity 13"></div>
+                    <div class="carousel-item"><img src="images/Maternity/maternity14.jpg" alt="Maternity 14"></div>
                 </div>
             </div>
 
@@ -589,16 +589,16 @@
                     <span>10 Showcase Items</span>
                 </div>
                 <div class="carousel">
-                    <div class="carousel-item"><img src="images/Newborn/newborn1.jpg" alt="Newborn 1"><div class="img-placeholder-text">newborn1.jpg</div></div>
-                    <div class="carousel-item"><img src="images/Newborn/newborn2.jpg" alt="Newborn 2"><div class="img-placeholder-text">newborn2.jpg</div></div>
-                    <div class="carousel-item"><img src="images/Newborn/newborn3.jpg" alt="Newborn 3"><div class="img-placeholder-text">newborn3.jpg</div></div>
-                    <div class="carousel-item"><img src="images/Newborn/newborn4.jpg" alt="Newborn 4"><div class="img-placeholder-text">newborn4.jpg</div></div>
-                    <div class="carousel-item"><img src="images/Newborn/newborn5.jpg" alt="Newborn 5"><div class="img-placeholder-text">newborn5.jpg</div></div>
-                    <div class="carousel-item"><img src="images/Newborn/newborn6.jpg" alt="Newborn 6"><div class="img-placeholder-text">newborn6.jpg</div></div>
-                    <div class="carousel-item"><img src="images/Newborn/newborn7.jpg" alt="Newborn 7"><div class="img-placeholder-text">newborn7.jpg</div></div>
-                    <div class="carousel-item"><img src="images/Newborn/newborn8.jpg" alt="Newborn 8"><div class="img-placeholder-text">newborn8.jpg</div></div>
-                    <div class="carousel-item"><img src="images/Newborn/newborn9.jpg" alt="Newborn 9"><div class="img-placeholder-text">newborn9.jpg</div></div>
-                    <div class="carousel-item"><img src="images/Newborn/newborn10.jpg" alt="Newborn 10"><div class="img-placeholder-text">newborn10.jpg</div></div>
+                    <div class="carousel-item"><img src="images/Newborn/newborn1.jpg" alt="Newborn 1"></div>
+                    <div class="carousel-item"><img src="images/Newborn/newborn2.jpg" alt="Newborn 2"></div>
+                    <div class="carousel-item"><img src="images/Newborn/newborn3.jpg" alt="Newborn 3"></div>
+                    <div class="carousel-item"><img src="images/Newborn/newborn4.jpg" alt="Newborn 4"></div>
+                    <div class="carousel-item"><img src="images/Newborn/newborn5.jpg" alt="Newborn 5"></div>
+                    <div class="carousel-item"><img src="images/Newborn/newborn6.jpg" alt="Newborn 6"></div>
+                    <div class="carousel-item"><img src="images/Newborn/newborn7.jpg" alt="Newborn 7"></div>
+                    <div class="carousel-item"><img src="images/Newborn/newborn8.jpg" alt="Newborn 8"></div>
+                    <div class="carousel-item"><img src="images/Newborn/newborn9.jpg" alt="Newborn 9"></div>
+                    <div class="carousel-item"><img src="images/Newborn/newborn10.jpg" alt="Newborn 10"></div>
                 </div>
             </div>
 
@@ -609,15 +609,15 @@
                     <span>9 Showcase Items</span>
                 </div>
                 <div class="carousel">
-                    <div class="carousel-item"><img src="images/Family/fam1.jpg" alt="Family 1"><div class="img-placeholder-text">fam1.jpg</div></div>
-                    <div class="carousel-item"><img src="images/Family/fam2.jpg" alt="Family 2"><div class="img-placeholder-text">fam2.jpg</div></div>
-                    <div class="carousel-item"><img src="images/Family/fam3.jpg" alt="Family 3"><div class="img-placeholder-text">fam3.jpg</div></div>
-                    <div class="carousel-item"><img src="images/Family/fam4.jpg" alt="Family 4"><div class="img-placeholder-text">fam4.jpg</div></div>
-                    <div class="carousel-item"><img src="images/Family/fam5.jpg" alt="Family 5"><div class="img-placeholder-text">fam5.jpg</div></div>
-                    <div class="carousel-item"><img src="images/Family/fam6.jpg" alt="Family 6"><div class="img-placeholder-text">fam6.jpg</div></div>
-                    <div class="carousel-item"><img src="images/Family/fam7.jpg" alt="Family 7"><div class="img-placeholder-text">fam7.jpg</div></div>
-                    <div class="carousel-item"><img src="images/Family/fam8.jpg" alt="Family 8"><div class="img-placeholder-text">fam8.jpg</div></div>
-                    <div class="carousel-item"><img src="images/Family/fam9.jpg" alt="Family 9"><div class="img-placeholder-text">fam9.jpg</div></div>
+                    <div class="carousel-item"><img src="images/Family/fam1.jpg" alt="Family 1"></div>
+                    <div class="carousel-item"><img src="images/Family/fam2.jpg" alt="Family 2"></div>
+                    <div class="carousel-item"><img src="images/Family/fam3.jpg" alt="Family 3"></div>
+                    <div class="carousel-item"><img src="images/Family/fam4.jpg" alt="Family 4"></div>
+                    <div class="carousel-item"><img src="images/Family/fam5.jpg" alt="Family 5"></div>
+                    <div class="carousel-item"><img src="images/Family/fam6.jpg" alt="Family 6"></div>
+                    <div class="carousel-item"><img src="images/Family/fam7.jpg" alt="Family 7"></div>
+                    <div class="carousel-item"><img src="images/Family/fam8.jpg" alt="Family 8"></div>
+                    <div class="carousel-item"><img src="images/Family/fam9.jpg" alt="Family 9"></div>
                 </div>
             </div>
 
@@ -628,16 +628,16 @@
                     <span>10 Showcase Items</span>
                 </div>
                 <div class="carousel">
-                    <div class="carousel-item"><img src="images/Solo/solo1.jpg" alt="Solo 1"><div class="img-placeholder-text">solo1.jpg</div></div>
-                    <div class="carousel-item"><img src="images/Solo/solo2.jpg" alt="Solo 2"><div class="img-placeholder-text">solo2.jpg</div></div>
-                    <div class="carousel-item"><img src="images/Solo/solo3.jpg" alt="Solo 3"><div class="img-placeholder-text">solo3.jpg</div></div>
-                    <div class="carousel-item"><img src="images/Solo/solo4.jpg" alt="Solo 4"><div class="img-placeholder-text">solo4.jpg</div></div>
-                    <div class="carousel-item"><img src="images/Solo/solo5.jpg" alt="Solo 5"><div class="img-placeholder-text">solo5.jpg</div></div>
-                    <div class="carousel-item"><img src="images/Solo/solo6.jpg" alt="Solo 6"><div class="img-placeholder-text">solo6.jpg</div></div>
-                    <div class="carousel-item"><img src="images/Solo/solo7.jpg" alt="Solo 7"><div class="img-placeholder-text">solo7.jpg</div></div>
-                    <div class="carousel-item"><img src="images/Solo/solo8.jpg" alt="Solo 8"><div class="img-placeholder-text">solo8.jpg</div></div>
-                    <div class="carousel-item"><img src="images/Solo/solo9.jpg" alt="Solo 9"><div class="img-placeholder-text">solo9.jpg</div></div>
-                    <div class="carousel-item"><img src="images/Solo/solo10.jpg" alt="Solo 10"><div class="img-placeholder-text">solo10.jpg</div></div>
+                    <div class="carousel-item"><img src="images/Solo/solo1.jpg" alt="Solo 1"></div>
+                    <div class="carousel-item"><img src="images/Solo/solo2.jpg" alt="Solo 2"></div>
+                    <div class="carousel-item"><img src="images/Solo/solo3.jpg" alt="Solo 3"></div>
+                    <div class="carousel-item"><img src="images/Solo/solo4.jpg" alt="Solo 4"></div>
+                    <div class="carousel-item"><img src="images/Solo/solo5.jpg" alt="Solo 5"></div>
+                    <div class="carousel-item"><img src="images/Solo/solo6.jpg" alt="Solo 6"></div>
+                    <div class="carousel-item"><img src="images/Solo/solo7.jpg" alt="Solo 7"></div>
+                    <div class="carousel-item"><img src="images/Solo/solo8.jpg" alt="Solo 8"></div>
+                    <div class="carousel-item"><img src="images/Solo/solo9.jpg" alt="Solo 9"></div>
+                    <div class="carousel-item"><img src="images/Solo/solo10.jpg" alt="Solo 10"></div>
                 </div>
             </div>
 
@@ -648,10 +648,10 @@
                     <span>4 Showcase Items</span>
                 </div>
                 <div class="carousel">
-                    <div class="carousel-item"><img src="images/Couple/couple1.jpg" alt="Couple 1"><div class="img-placeholder-text">couple1.jpg</div></div>
-                    <div class="carousel-item"><img src="images/Couple/couple2.jpg" alt="Couple 2"><div class="img-placeholder-text">couple2.jpg</div></div>
-                    <div class="carousel-item"><img src="images/Couple/couple3.jpg" alt="Couple 3"><div class="img-placeholder-text">couple3.jpg</div></div>
-                    <div class="carousel-item"><img src="images/Couple/couple4.jpg" alt="Couple 4"><div class="img-placeholder-text">couple4.jpg</div></div>
+                    <div class="carousel-item"><img src="images/Couple/couple1.jpg" alt="Couple 1"></div>
+                    <div class="carousel-item"><img src="images/Couple/couple2.jpg" alt="Couple 2"></div>
+                    <div class="carousel-item"><img src="images/Couple/couple3.jpg" alt="Couple 3"></div>
+                    <div class="carousel-item"><img src="images/Couple/couple4.jpg" alt="Couple 4"></div>
                 </div>
             </div>
 
@@ -711,6 +711,7 @@
     <script>
         const discoverBtn = document.getElementById('discoverBtn');
         const servicesSection = document.getElementById('services');
+        const mainHeader = document.getElementById('mainHeader');
         const lightbox = document.getElementById('imageLightbox');
         const lightboxImg = document.getElementById('lightboxImg');
         const lightboxClose = document.getElementById('lightboxClose');
@@ -722,21 +723,18 @@
             const starCount = 60; 
             for (let i = 0; i < starCount; i++) {
                 const star = document.createElement('div');
-                const isSparkle = Math.random() > 0.75; // 25% chance of being a diamond-sparkle star
+                const isSparkle = Math.random() > 0.75; 
                 
                 star.classList.add('star');
                 if (isSparkle) star.classList.add('sparkle');
 
-                // Distribute uniformly across the gallery landscape layout
                 star.style.top = `${Math.random() * 100}%`;
                 star.style.left = `${Math.random() * 100}%`;
                 
-                // Variable sizing
                 const size = isSparkle ? Math.random() * 8 + 6 : Math.random() * 3 + 1;
                 star.style.width = `${size}px`;
                 star.style.height = `${size}px`;
                 
-                // Randomized timing offsets so they stay organic
                 star.style.setProperty('--duration', `${Math.random() * 4 + 3}s`);
                 star.style.animationDelay = `${Math.random() * 5}s`;
 
@@ -748,10 +746,27 @@
         // 2. Discover Button -> Turns on Dark Mode and scrolls down
         discoverBtn.addEventListener('click', () => {
             servicesSection.classList.add('dark-gallery-theme');
+            mainHeader.classList.add('dark-header');
             servicesSection.scrollIntoView({ behavior: 'smooth' });
         });
 
-        // 3. Carousel item pop-up click tracking
+        // 3. Dynamic Scroll Listener -> Handles automatic header color swaps between sections
+        window.addEventListener('scroll', () => {
+            const servicesTop = servicesSection.offsetTop;
+            const servicesHeight = servicesSection.offsetHeight;
+            const scrollPos = window.scrollY + 100; // Offset checking slightly before passing line
+
+            if (scrollPos >= servicesTop && scrollPos < (servicesTop + servicesHeight)) {
+                // Inside the Gallery section -> Make header Dark
+                servicesSection.classList.add('dark-gallery-theme');
+                mainHeader.classList.add('dark-header');
+            } else {
+                // In Home, About, or Contact -> Revert to White header
+                mainHeader.classList.remove('dark-header');
+            }
+        });
+
+        // 4. Carousel item pop-up click tracking
         carouselItems.forEach(item => {
             item.addEventListener('click', () => {
                 const imgTarget = item.querySelector('img');
@@ -763,7 +778,7 @@
             });
         });
 
-        // 4. Modal Exit Handlers
+        // 5. Modal Exit Handlers
         lightboxClose.addEventListener('click', () => lightbox.classList.remove('active'));
         lightbox.addEventListener('click', (e) => {
             if(e.target === lightbox) lightbox.classList.remove('active');
