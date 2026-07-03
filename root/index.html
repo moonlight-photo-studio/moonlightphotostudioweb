@@ -7,10 +7,10 @@
     <style>
         /* --- BRAND PALETTE (Ref: a817e66d-ac5a-493d-a427-8f59e2d15eeb.jfif & image_dd77cb.png) --- */
         :root {
-            --bg-color: #000000; /* Fixed to absolute black to seamlessly blend your logo */
+            --bg-color: #000000; /* Absolute pure black to perfectly blend your logo image background */
             --text-color: #ffffff;
             --text-muted: #a0a0a6;
-            --accent-yellow: #f1b84e; /* Gold accent from logo */
+            --accent-yellow: #f1b84e; /* Gold accent from your logo stars/crescent */
             --accent-yellow-hover: #dda336;
             --card-bg: #111113;
             --border-color: #1a1a1e;
@@ -114,7 +114,7 @@
             color: var(--accent-yellow);
         }
 
-        /* --- HERO SECTION (With Star Layer integration) --- */
+        /* --- HERO SECTION --- */
         .hero {
             min-height: 100vh;
             display: flex;
@@ -429,7 +429,7 @@
 
     <!-- HOME / LANDING PAGE -->
     <section id="home" class="hero">
-        <!-- Starfield added here to show directly behind Home context titles -->
+        <!-- Twinkling stars run behind your titles here -->
         <div class="starfield" id="homeStarfield"></div>
         
         <div class="hero-content">
@@ -466,7 +466,7 @@
                         <div class="carousel-item"><img src="images/Pre-nup/prenup4.jpg" alt="Pre-nup 4"></div>
                         <div class="carousel-item"><img src="images/Pre-nup/prenup5.jpg" alt="Pre-nup 5"></div>
                         <div class="carousel-item"><img src="images/Pre-nup/prenup6.jpg" alt="Pre-nup 6"></div>
-                        <!-- Duplicates for scrolling infinite loops -->
+                        <!-- Duplicates for seamless loop crawling -->
                         <div class="carousel-item"><img src="images/Pre-nup/prenup1.jpg"></div>
                         <div class="carousel-item"><img src="images/Pre-nup/prenup2.jpg"></div>
                         <div class="carousel-item"><img src="images/Pre-nup/prenup3.jpg"></div>
@@ -655,7 +655,7 @@
         const mainStarfield = document.getElementById('starfield');
         const homeStarfield = document.getElementById('homeStarfield');
 
-        // Render Starfields on both Home and Gallery regions
+        // Render Starfields on both Home landing and Gallery sections
         function fillStarfield(targetContainer, totalStars) {
             for (let i = 0; i < totalStars; i++) {
                 const star = document.createElement('div');
@@ -672,8 +672,8 @@
                 targetContainer.appendChild(star);
             }
         }
-        fillStarfield(homeStarfield, 40); // 40 gentle twinkling elements right at home landing view
-        fillStarfield(mainStarfield, 60);
+        fillStarfield(homeStarfield, 45); // Active twinkling stars inside hero loading view
+        fillStarfield(mainStarfield, 65);
 
         discoverBtn.addEventListener('click', () => {
             servicesSection.scrollIntoView({ behavior: 'smooth' });
@@ -728,7 +728,7 @@
             if(e.target === lightbox) lightbox.classList.remove('active');
         });
 
-        // Carousel Drag Handling
+        // Manual Scroll Drag Mapping
         document.querySelectorAll('.carousel-wrapper').forEach(wrapper => {
             let isDown = false;
             let startX;
