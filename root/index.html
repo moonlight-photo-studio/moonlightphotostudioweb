@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Moonlight Photo Studio</title>
     <style>
-        /* --- BRAND PALETTE --- */
+        /* --- BRAND PALETTE (Ref: a817e66d-ac5a-493d-a427-8f59e2d15eeb.jfif & image_dd77cb.png) --- */
         :root {
             --bg-color: #000000; /* Absolute pure black to perfectly blend your logo image background */
             --text-color: #ffffff;
@@ -139,6 +139,7 @@
             transform: translateY(-2px);
         }
 
+        /* Enhanced Moon Glow Graphic (Ref: image_ddf76e.png) */
         .hero-graphic {
             position: absolute;
             right: 8%;
@@ -151,6 +152,15 @@
             background-size: contain;
             border-radius: 50%;
             z-index: 2;
+            /* Radiant lunar glow effect to elevate the circle moon structure */
+            box-shadow: 0 0 60px rgba(241, 184, 78, 0.25), 
+                        0 0 30px rgba(255, 255, 255, 0.05);
+            transition: box-shadow 0.5s ease;
+        }
+
+        .hero:hover .hero-graphic {
+            box-shadow: 0 0 80px rgba(241, 184, 78, 0.35), 
+                        0 0 40px rgba(255, 255, 255, 0.1);
         }
 
         /* --- SERVICES GALLERY --- */
@@ -382,6 +392,7 @@
 </head>
 <body>
 
+    <!-- NAVIGATION HEADER -->
     <header id="mainHeader">
         <div class="logo">Moonlight</div>
         <nav>
@@ -394,6 +405,7 @@
         </nav>
     </header>
 
+    <!-- HOME / LANDING PAGE -->
     <section id="home" class="hero">
         <div class="hero-content">
             <h1>Moonlight<br>Photo Studio</h1>
@@ -406,6 +418,7 @@
         <div class="hero-graphic"></div>
     </section>
 
+    <!-- SERVICES GALLERY SECTION -->
     <section id="services" class="services-section">
         <div class="services-inner">
             <div class="section-header">
@@ -413,6 +426,7 @@
                 <p>Explore curated studio frames crafted carefully to preserve your finest stories.</p>
             </div>
 
+            <!-- CATEGORY: PRE-NUP -->
             <div class="category-container" data-category="prenup">
                 <div class="category-title-bar">
                     <h3>Pre-Nup Session</h3>
@@ -425,6 +439,7 @@
                         <div class="carousel-item"><img src="images/Pre-nup/prenup4.jpg" alt="Pre-nup 4"></div>
                         <div class="carousel-item"><img src="images/Pre-nup/prenup5.jpg" alt="Pre-nup 5"></div>
                         <div class="carousel-item"><img src="images/Pre-nup/prenup6.jpg" alt="Pre-nup 6"></div>
+                        <!-- Duplicates for scrolling loop -->
                         <div class="carousel-item"><img src="images/Pre-nup/prenup1.jpg"></div>
                         <div class="carousel-item"><img src="images/Pre-nup/prenup2.jpg"></div>
                         <div class="carousel-item"><img src="images/Pre-nup/prenup3.jpg"></div>
@@ -433,6 +448,7 @@
                 <div class="see-more-area"><button class="btn-see-more">See More</button></div>
             </div>
 
+            <!-- CATEGORY: MATERNITY -->
             <div class="category-container" data-category="maternity">
                 <div class="category-title-bar">
                     <h3>Maternity</h3>
@@ -453,6 +469,7 @@
                 <div class="see-more-area"><button class="btn-see-more">See More</button></div>
             </div>
 
+            <!-- CATEGORY: NEWBORN -->
             <div class="category-container" data-category="newborn">
                 <div class="category-title-bar">
                     <h3>Newborn</h3>
@@ -473,6 +490,7 @@
                 <div class="see-more-area"><button class="btn-see-more">See More</button></div>
             </div>
 
+            <!-- CATEGORY: FAMILY -->
             <div class="category-container" data-category="family">
                 <div class="category-title-bar">
                     <h3>Family Portraits</h3>
@@ -493,6 +511,7 @@
                 <div class="see-more-area"><button class="btn-see-more">See More</button></div>
             </div>
 
+            <!-- CATEGORY: SOLO -->
             <div class="category-container" data-category="solo">
                 <div class="category-title-bar">
                     <h3>Solo / Portraits</h3>
@@ -513,6 +532,7 @@
                 <div class="see-more-area"><button class="btn-see-more">See More</button></div>
             </div>
 
+            <!-- CATEGORY: COUPLE -->
             <div class="category-container" data-category="couple">
                 <div class="category-title-bar">
                     <h3>Couple Portfolio</h3>
@@ -535,6 +555,7 @@
         </div>
     </section>
 
+    <!-- ABOUT SECTION -->
     <section id="about" class="about-section">
         <div class="about-text">
             <h2>About The Studio</h2>
@@ -542,6 +563,7 @@
         </div>
     </section>
 
+    <!-- CONTACT SECTION -->
     <section id="contact" class="contact-section">
         <div class="contact-container">
             <h2>Let's Craft Memories</h2>
@@ -568,6 +590,7 @@
         </div>
     </section>
 
+    <!-- LIGHTBOX SLIDESHOW MODAL -->
     <div class="lightbox" id="imageLightbox">
         <span class="lightbox-close" id="lightboxClose">×</span>
         <div class="lightbox-content-wrapper">
@@ -581,6 +604,7 @@
         <p>© 2026 Moonlight Photo Studio. All rights reserved.</p>
     </footer>
 
+    <!-- INTERACTIVE BEHAVIORS SCRIPT -->
     <script>
         const imageDatabase = {
             prenup: Array.from({length: 9}, (_, i) => `images/Pre-nup/prenup${i+1}.jpg`),
