@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Moonlight Photo Studio</title>
+    <title>Moonlight Photo Studio Hub</title>
     <style>
-        /* --- BRAND PALETTE --- */
+        /* --- BRAND PALETTES --- */
         :root {
-            --bg-color: #000000; /* Absolute pure black to perfectly blend your logo image background */
+            /* Moonlight Photo Studio (Default Solid Black Theme) */
+            --bg-color: #000000; 
             --text-color: #ffffff;
             --text-muted: #a0a0a6;
             --accent-yellow: #f1b84e; /* Gold accent from your logo stars/crescent */
@@ -25,6 +26,45 @@
             --header-text: #ffffff;
         }
 
+        /* Branch 2 Dynamic Modifier: Little Moon Photo Studio (Black & Silver Motif) */
+        body.branch-little-moon {
+            --bg-color: #0a0a0c;
+            --text-color: #e1e1e6;
+            --text-muted: #8a8a93;
+            --accent-yellow: #cccccc; /* Sleek Silver Accent */
+            --accent-yellow-hover: #aaaaaa;
+            --card-bg: #18181c;
+            --border-color: #2a2a30;
+            --gallery-bg: #0a0a0c;
+            --gallery-text: #e1e1e6;
+            --gallery-muted: #8a8a93;
+        }
+
+        /* Branch 3 Dynamic Modifier: Moonlight Self Portrait (Pink Motif) */
+        body.branch-self-portrait {
+            --bg-color: #fff0f5; /* Soft Lavender Blush Pink */
+            --text-color: #4a2e35; /* Deep Berry Text */
+            --text-muted: #a07881;
+            --accent-yellow: #ffb6c1; /* Classic Pastel Pink Accent */
+            --accent-yellow-hover: #ffa07a;
+            --card-bg: #ffffff;
+            --border-color: #fbdbe3;
+            --gallery-bg: #fff0f5;
+            --gallery-text: #4a2e35;
+            --gallery-muted: #a07881;
+            --header-bg: rgba(255, 240, 245, 0.95);
+            --header-text: #4a2e35;
+        }
+
+        /* Branch filtering classes managed through state logic */
+        body.branch-self-portrait .hide-on-self-portrait {
+            display: none !important;
+        }
+
+        body:not(.branch-self-portrait) .show-only-on-self-portrait {
+            display: none !important;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -37,9 +77,10 @@
             background-color: var(--bg-color);
             color: var(--text-color);
             overflow-x: hidden;
+            transition: background-color 0.4s ease, color 0.4s ease;
         }
 
-        /* --- NAVIGATION --- */
+        /* --- NAVIGATION & BRANCH DROPDOWN --- */
         header {
             position: fixed;
             top: 0;
@@ -62,23 +103,78 @@
             font-weight: 700;
             letter-spacing: 1px;
             text-transform: uppercase;
+            cursor: pointer;
+            user-select: none;
         }
 
         nav ul {
             display: flex;
             list-style: none;
             gap: 40px;
+            align-items: center;
         }
 
-        nav ul li a {
+        nav ul li {
+            position: relative;
+        }
+
+        nav ul li a, .dropdown-trigger {
             text-decoration: none;
             color: var(--header-text);
             font-size: 0.9rem;
             font-weight: 500;
+            cursor: pointer;
+            background: none;
+            border: none;
+            display: flex;
+            align-items: center;
+            gap: 4px;
             transition: color 0.3s ease;
         }
 
-        nav ul li a:hover {
+        nav ul li a:hover, .dropdown-trigger:hover {
+            color: var(--accent-yellow);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            list-style: none;
+            min-width: 240px;
+            padding: 10px 0;
+            margin-top: 15px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        nav ul li:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-menu li button {
+            width: 100%;
+            background: none;
+            border: none;
+            text-align: left;
+            padding: 12px 20px;
+            color: var(--text-color);
+            font-size: 0.85rem;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.2s, color 0.2s;
+        }
+
+        .dropdown-menu li button:hover {
+            background-color: var(--border-color);
             color: var(--accent-yellow);
         }
 
@@ -91,6 +187,10 @@
             position: relative;
             background: radial-gradient(circle at 85% 50%, #141416 0%, transparent 60%);
             overflow: hidden;
+        }
+
+        body.branch-self-portrait .hero {
+            background: radial-gradient(circle at 85% 50%, #fbe3eb 0%, transparent 60%);
         }
 
         .hero-content {
@@ -134,13 +234,17 @@
             transition: all 0.3s ease;
         }
 
+        body.branch-self-portrait .btn-discover {
+            color: #4a2e35;
+        }
+
         .btn-discover:hover {
             background-color: var(--accent-yellow-hover);
             transform: translateY(-2px);
         }
 
-        /* Perfectly Balanced Circular Moon Glow Layout */
-        .hero-graphic {
+        /* --- THE CIRCLING LIGHT/MOON SHADOW ENGINE --- */
+        .hero-graphic-container {
             position: absolute;
             right: 8%;
             top: 55%;
@@ -149,21 +253,71 @@
             height: 40vw;
             max-width: 480px;
             max-height: 480px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+            border-radius: 50%;
+        }
+
+        .hero-graphic-container::before {
+            content: '';
+            position: absolute;
+            width: 104%;
+            height: 104%;
+            border-radius: 50%;
+            background: conic-gradient(transparent, transparent, var(--accent-yellow), transparent);
+            animation: rotate-shadow 4s linear infinite;
+            filter: blur(15px);
+        }
+
+        @keyframes rotate-shadow {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .hero-graphic {
+            width: 100%;
+            height: 100%;
             background: transparent url('images/logo.jpg') no-repeat center;
             background-size: contain;
             border-radius: 50%;
-            z-index: 2;
-            /* Layered direct golden yellow shadows create a strong, perfectly symmetrical round bloom */
-            box-shadow: 0 0 25px 5px rgba(241, 184, 78, 0.5), 
-                        0 0 50px 15px rgba(241, 184, 78, 0.3), 
-                        0 0 80px 30px rgba(241, 184, 78, 0.15);
-            transition: box-shadow 0.5s ease;
+            position: relative;
+            z-index: 3;
+            box-shadow: 0 0 30px rgba(241, 184, 78, 0.2);
         }
 
-        .hero:hover .hero-graphic {
-            box-shadow: 0 0 35px 10px rgba(241, 184, 78, 0.65), 
-                        0 0 65px 25px rgba(241, 184, 78, 0.45), 
-                        0 0 100px 40px rgba(241, 184, 78, 0.25);
+        /* --- SUB-SERVICES SECTIONS --- */
+        .sub-services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .sub-service-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 40px 30px;
+            text-align: left;
+            transition: transform 0.3s ease;
+        }
+
+        .sub-service-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .sub-service-card h3 {
+            font-size: 1.35rem;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .sub-service-card p {
+            font-size: 0.95rem;
+            color: var(--gallery-muted);
+            line-height: 1.6;
         }
 
         /* --- SERVICES GALLERY --- */
@@ -368,7 +522,8 @@
         /* --- ABOUT & CONTACT --- */
         .about-section {
             padding: 120px 8%;
-            background-color: #08080a;
+            background-color: var(--card-bg);
+            border-top: 1px solid var(--border-color);
         }
 
         .about-text h2 { font-size: 2.5rem; margin-bottom: 25px; }
@@ -387,7 +542,8 @@
 
         @media (max-width: 1024px) {
             .hero { flex-direction: column; text-align: center; padding-top: 140px; }
-            .hero-graphic { position: relative; transform: none; right: auto; top: auto; width: 320px; height: 320px; margin-top: 40px; }
+            .hero-graphic-container { position: relative; transform: none; right: auto; top: auto; width: 320px; height: 320px; margin-top: 40px; }
+            .sub-services-grid { grid-template-columns: 1fr; gap: 20px; }
             .arrow-left { left: 10px; }
             .arrow-right { right: 10px; }
         }
@@ -395,11 +551,20 @@
 </head>
 <body>
 
+    <!-- NAVIGATION HEADER -->
     <header id="mainHeader">
-        <div class="logo">Moonlight</div>
+        <div class="logo" id="logoText">Moonlight</div>
         <nav>
             <ul>
                 <li><a href="#home">Home</a></li>
+                <li>
+                    <button class="dropdown-trigger" id="branchBtn">Branch ▾</button>
+                    <ul class="dropdown-menu">
+                        <li><button onclick="switchBranch('moonlight')">Moonlight Photo Studio</button></li>
+                        <li><button onclick="switchBranch('little-moon')">Little Moon Photo Studio</button></li>
+                        <li><button onclick="switchBranch('self-portrait')">Moonlight Self Portrait</button></li>
+                    </ul>
+                </li>
                 <li><a href="#services">Services</a></li>
                 <li><a href="#about">About</a></li>
                 <li><a href="#contact">Contact</a></li>
@@ -407,26 +572,113 @@
         </nav>
     </header>
 
+    <!-- HOME / LANDING PAGE -->
     <section id="home" class="hero">
         <div class="hero-content">
-            <h1>Moonlight<br>Photo Studio</h1>
-            <p>Capturing life's most beautiful milestones with minimal elegance and timeless high-contrast. Frame your moments beautifully under soft light and deliberate details.</p>
+            <h1 id="heroTitle">Moonlight<br>Photo Studio</h1>
+            <p id="heroDesc">Capturing life's most beautiful milestones with minimal elegance and timeless high-contrast. Frame your moments beautifully under soft light and deliberate details.</p>
             <button class="btn-discover" id="discoverBtn">
                 Discover 
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
             </button>
         </div>
-        <div class="hero-graphic"></div>
+        
+        <div class="hero-graphic-container">
+            <div class="hero-graphic" id="heroLogoDisk"></div>
+        </div>
     </section>
 
+    <!-- SERVICES GALLERY SECTION -->
     <section id="services" class="services-section">
         <div class="services-inner">
+            
             <div class="section-header">
+                <h2>Our Services</h2>
+                <p>Premium options structured precisely around your creative and session demands.</p>
+            </div>
+
+            <div class="sub-services-grid">
+                <div class="sub-service-card">
+                    <h3>Packages</h3>
+                    <p>Explore comprehensive combinations covering extended studio hours, custom lookbooks, digital enhancements, and priority frame print processing options.</p>
+                </div>
+                <div class="sub-service-card">
+                    <h3>Backdrops</h3>
+                    <p>Choose from a rich lineup of curated background canvas panels—ranging from warm vintage earth tones and high-contrast minimal drops to abstract studio shadows.</p>
+                </div>
+                <div class="sub-service-card">
+                    <h3>Rentals</h3>
+                    <p>Gain access to our fully equipped prop sets, tailored styling wardrobe choices, premium lens kits, and off-camera continuous soft-lighting systems.</p>
+                </div>
+            </div>
+
+            <div class="section-header" style="margin-top: 100px;">
                 <h2>Our Collections</h2>
                 <p>Explore curated studio frames crafted carefully to preserve your finest stories.</p>
             </div>
 
-            <div class="category-container" data-category="prenup">
+            <!-- CATEGORY: BARKADA (SHOWS ONLY ON SELF PORTRAIT) -->
+            <div class="category-container show-only-on-self-portrait" data-category="barkada">
+                <div class="category-title-bar">
+                    <h3>Barkada Series</h3>
+                </div>
+                <div class="carousel-wrapper">
+                    <div class="carousel">
+                        <div class="carousel-item"><img src="images/Barkada/barkada1.jpg" alt="Barkada 1"></div>
+                        <div class="carousel-item"><img src="images/Barkada/barkada2.jpg" alt="Barkada 2"></div>
+                        <div class="carousel-item"><img src="images/Barkada/barkada3.jpg" alt="Barkada 3"></div>
+                        <div class="carousel-item"><img src="images/Barkada/barkada1.jpg"></div>
+                        <div class="carousel-item"><img src="images/Barkada/barkada2.jpg"></div>
+                        <div class="carousel-item"><img src="images/Barkada/barkada3.jpg"></div>
+                    </div>
+                </div>
+                <div class="see-more-area"><button class="btn-see-more">See More</button></div>
+            </div>
+
+            <!-- CATEGORY: SOLO -->
+            <div class="category-container" data-category="solo">
+                <div class="category-title-bar">
+                    <h3>Solo / Portraits</h3>
+                </div>
+                <div class="carousel-wrapper">
+                    <div class="carousel">
+                        <div class="carousel-item"><img src="images/Solo/solo1.jpg" alt="Solo 1"></div>
+                        <div class="carousel-item"><img src="images/Solo/solo2.jpg" alt="Solo 2"></div>
+                        <div class="carousel-item"><img src="images/Solo/solo3.jpg" alt="Solo 3"></div>
+                        <div class="carousel-item"><img src="images/Solo/solo4.jpg" alt="Solo 4"></div>
+                        <div class="carousel-item"><img src="images/Solo/solo5.jpg" alt="Solo 5"></div>
+                        <div class="carousel-item"><img src="images/Solo/solo6.jpg" alt="Solo 6"></div>
+                        <div class="carousel-item"><img src="images/Solo/solo7.jpg"></div>
+                        <div class="carousel-item"><img src="images/Solo/solo8.jpg"></div>
+                        <div class="carousel-item"><img src="images/Solo/solo9.jpg"></div>
+                    </div>
+                </div>
+                <div class="see-more-area"><button class="btn-see-more">See More</button></div>
+            </div>
+
+            <!-- CATEGORY: GRADUATION (HIDE ON SELF PORTRAIT) -->
+            <div class="category-container hide-on-self-portrait" data-category="graduation">
+                <div class="category-title-bar">
+                    <h3>Graduation Series</h3>
+                </div>
+                <div class="carousel-wrapper">
+                    <div class="carousel">
+                        <div class="carousel-item"><img src="images/Graduation Photo/grad1.jpg" alt="Graduation 1"></div>
+                        <div class="carousel-item"><img src="images/Graduation Photo/grad2.jpg" alt="Graduation 2"></div>
+                        <div class="carousel-item"><img src="images/Graduation Photo/grad3.jpg" alt="Graduation 3"></div>
+                        <div class="carousel-item"><img src="images/Graduation Photo/grad4.jpg" alt="Graduation 4"></div>
+                        <div class="carousel-item"><img src="images/Graduation Photo/grad5.jpg" alt="Graduation 5"></div>
+                        <div class="carousel-item"><img src="images/Graduation Photo/grad6.jpg" alt="Graduation 6"></div>
+                        <div class="carousel-item"><img src="images/Graduation Photo/grad1.jpg"></div>
+                        <div class="carousel-item"><img src="images/Graduation Photo/grad2.jpg"></div>
+                        <div class="carousel-item"><img src="images/Graduation Photo/grad3.jpg"></div>
+                    </div>
+                </div>
+                <div class="see-more-area"><button class="btn-see-more">See More</button></div>
+            </div>
+
+            <!-- CATEGORY: PRE-NUP (HIDE ON SELF PORTRAIT) -->
+            <div class="category-container hide-on-self-portrait" data-category="prenup">
                 <div class="category-title-bar">
                     <h3>Pre-Nup Session</h3>
                 </div>
@@ -446,7 +698,8 @@
                 <div class="see-more-area"><button class="btn-see-more">See More</button></div>
             </div>
 
-            <div class="category-container" data-category="maternity">
+            <!-- CATEGORY: MATERNITY (HIDE ON SELF PORTRAIT) -->
+            <div class="category-container hide-on-self-portrait" data-category="maternity">
                 <div class="category-title-bar">
                     <h3>Maternity</h3>
                 </div>
@@ -466,7 +719,8 @@
                 <div class="see-more-area"><button class="btn-see-more">See More</button></div>
             </div>
 
-            <div class="category-container" data-category="newborn">
+            <!-- CATEGORY: NEWBORN (HIDE ON SELF PORTRAIT) -->
+            <div class="category-container hide-on-self-portrait" data-category="newborn">
                 <div class="category-title-bar">
                     <h3>Newborn</h3>
                 </div>
@@ -486,7 +740,8 @@
                 <div class="see-more-area"><button class="btn-see-more">See More</button></div>
             </div>
 
-            <div class="category-container" data-category="family">
+            <!-- CATEGORY: FAMILY (HIDE ON SELF PORTRAIT) -->
+            <div class="category-container hide-on-self-portrait" data-category="family">
                 <div class="category-title-bar">
                     <h3>Family Portraits</h3>
                 </div>
@@ -506,27 +761,8 @@
                 <div class="see-more-area"><button class="btn-see-more">See More</button></div>
             </div>
 
-            <div class="category-container" data-category="solo">
-                <div class="category-title-bar">
-                    <h3>Solo / Portraits</h3>
-                </div>
-                <div class="carousel-wrapper">
-                    <div class="carousel">
-                        <div class="carousel-item"><img src="images/Solo/solo1.jpg" alt="Solo 1"></div>
-                        <div class="carousel-item"><img src="images/Solo/solo2.jpg" alt="Solo 2"></div>
-                        <div class="carousel-item"><img src="images/Solo/solo3.jpg" alt="Solo 3"></div>
-                        <div class="carousel-item"><img src="images/Solo/solo4.jpg" alt="Solo 4"></div>
-                        <div class="carousel-item"><img src="images/Solo/solo5.jpg" alt="Solo 5"></div>
-                        <div class="carousel-item"><img src="images/Solo/solo6.jpg" alt="Solo 6"></div>
-                        <div class="carousel-item"><img src="images/Solo/solo1.jpg"></div>
-                        <div class="carousel-item"><img src="images/Solo/solo2.jpg"></div>
-                        <div class="carousel-item"><img src="images/Solo/solo3.jpg"></div>
-                    </div>
-                </div>
-                <div class="see-more-area"><button class="btn-see-more">See More</button></div>
-            </div>
-
-            <div class="category-container" data-category="couple">
+            <!-- CATEGORY: COUPLE (HIDE ON SELF PORTRAIT) -->
+            <div class="category-container hide-on-self-portrait" data-category="couple">
                 <div class="category-title-bar">
                     <h3>Couple Portfolio</h3>
                 </div>
@@ -548,30 +784,32 @@
         </div>
     </section>
 
+    <!-- ABOUT SECTION -->
     <section id="about" class="about-section">
         <div class="about-text">
-            <h2>About The Studio</h2>
-            <p>At Moonlight Photo Studio, we believe that every fleeting frame holds a grander story. Operating under a clean, high-contrast aesthetic philosophy, we make sure that your most valuable personal milestones are immortalized precisely as they felt.</p>
+            <h2 id="aboutTitle">About The Studio</h2>
+            <p id="aboutDesc">At Moonlight Photo Studio, we believe that every fleeting frame holds a grander story. Operating under a clean, high-contrast aesthetic philosophy, we make sure that your most valuable personal milestones are immortalized precisely as they felt.</p>
         </div>
     </section>
 
+    <!-- CONTACT SECTION -->
     <section id="contact" class="contact-section">
         <div class="contact-container">
             <h2>Let's Craft Memories</h2>
             <div class="contact-details">
                 <div class="contact-info-block">
                     <h4>Studio Address & Hotlines</h4>
-                    <p style="margin-bottom: 8px;">
-                        <a href="https://maps.google.com/?q=MDD+Place+Building,+Kaypian+Road,+San+Jose+del+Monte,+Bulacan" target="_blank" class="map-redirect-link">
+                    <p style="margin-bottom: 8px;" id="contactAddrContainer">
+                        <a href="https://maps.google.com/?q=MDD+Place+Building,+Kaypian+Road,+San+Jose+del+Monte,+Bulacan" target="_blank" class="map-redirect-link" id="contactAddrLink">
                             MDD Place Building, Unit 15, Block 12, Kaypian Road, Barangay Kaypian, San Jose del Monte, Bulacan
                         </a>
                     </p>
-                    <p><strong>Tel:</strong> 0954 345 1237</p>
-                    <p><strong>Email:</strong> <a href="mailto:moonlightphotostudio021521@gmail.com">moonlightphotostudio021521@gmail.com</a></p>
+                    <p id="contactPhone"><strong>Tel:</strong> 0954 345 1237</p>
+                    <p id="contactEmail"><strong>Email:</strong> <a href="mailto:moonlightphotostudio021521@gmail.com">moonlightphotostudio021521@gmail.com</a></p>
                 </div>
                 <div class="contact-info-block">
                     <h4>Social Channels</h4>
-                    <div class="social-links">
+                    <div class="social-links" id="contactSocials">
                         <a href="https://www.facebook.com/moonlight.phtstd" target="_blank">Facebook Page</a>
                         <a href="https://www.instagram.com/moonlightphoto.studio" target="_blank">Instagram</a>
                         <a href="https://www.youtube.com/@moonlightphotostudio3203" target="_blank">YouTube Channel</a>
@@ -581,6 +819,7 @@
         </div>
     </section>
 
+    <!-- LIGHTBOX SLIDESHOW MODAL -->
     <div class="lightbox" id="imageLightbox">
         <span class="lightbox-close" id="lightboxClose">×</span>
         <div class="lightbox-content-wrapper">
@@ -594,14 +833,18 @@
         <p>© 2026 Moonlight Photo Studio. All rights reserved.</p>
     </footer>
 
+    <!-- INTERACTIVE BEHAVIORS SCRIPT -->
     <script>
+        // Expanded image source indices tracking parameters perfectly
         const imageDatabase = {
+            graduation: Array.from({length: 24}, (_, i) => `images/Graduation Photo/grad${i+1}.jpg`),
             prenup: Array.from({length: 9}, (_, i) => `images/Pre-nup/prenup${i+1}.jpg`),
             maternity: Array.from({length: 14}, (_, i) => `images/Maternity/maternity${i+1}.jpg`),
             newborn: Array.from({length: 10}, (_, i) => `images/Newborn/newborn${i+1}.jpg`),
             family: Array.from({length: 9}, (_, i) => `images/Family/fam${i+1}.jpg`),
-            solo: Array.from({length: 10}, (_, i) => `images/Solo/solo${i+1}.jpg`),
-            couple: Array.from({length: 4}, (_, i) => `images/Couple/couple${i+1}.jpg`)
+            solo: Array.from({length: 21}, (_, i) => `images/Solo/solo${i+1}.jpg`),
+            couple: Array.from({length: 4}, (_, i) => `images/Couple/couple${i+1}.jpg`),
+            barkada: Array.from({length: 3}, (_, i) => `images/Barkada/barkada${i+1}.jpg`)
         };
 
         let currentActiveList = [];
@@ -615,6 +858,110 @@
         const prevBtn = document.getElementById('prevBtn');
         const nextBtn = document.getElementById('nextBtn');
 
+        // Multi-Branch Copy Content Database (Includes deep hash reference keys)
+        const branchContent = {
+            'moonlight': {
+                title: "Moonlight<br>Photo Studio",
+                logo: "images/logo.jpg",
+                aboutTitle: "About The Studio",
+                aboutDesc: "At Moonlight Photo Studio, we believe that every fleeting frame holds a grander story. Operating under a clean, high-contrast aesthetic philosophy, we make sure that your most valuable personal milestones are immortalized precisely as they felt.",
+                address: "MDD Place Building, Unit 15, Block 12, Kaypian Road, Barangay Kaypian, San Jose del Monte, Bulacan",
+                mapsUrl: "https://maps.google.com/?q=MDD+Place+Building,+Kaypian+Road,+San+Jose+del+Monte,+Bulacan",
+                tel: "0954 345 1237",
+                email: "moonlightphotostudio021521@gmail.com",
+                fb: "https://www.facebook.com/moonlight.phtstd",
+                hasExtraSocials: true
+            },
+            'little-moon': {
+                title: "Little Moon<br>Photo Studio",
+                logo: "images/logo3.jpg",
+                aboutTitle: "About Little Moon",
+                aboutDesc: "Little Moon Photo Studio delivers a striking, modern black-and-silver alternative landscape format. We focus on premium monochrome portraits, artistic contrast sets, and high-end graduation and family milestone indexing.",
+                address: "Blk 28 lot 11, EVR Avenue Barangay Assumption, San Jose Del Monte Bulacan, Bulacan, Philippines, 3024",
+                mapsUrl: "https://maps.google.com/?q=EVR+Avenue+Barangay+Assumption+San+Jose+Del+Monte",
+                tel: "0954 345 1237",
+                email: "littlemoonphotostudio@gmail.com",
+                fb: "https://www.facebook.com/share/1EAF4CgSPP/",
+                hasExtraSocials: false
+            },
+            'self-portrait': {
+                title: "Moonlight<br>Self Portrait",
+                logo: "images/logo2.jpg",
+                aboutTitle: "About The Self Portrait Studio",
+                aboutDesc: "Step into your own canvas at Moonlight Self Portrait Studio. Express yourself completely raw and undisturbed in our private, pink-accented studio slots utilizing automated remote-shutter systems.",
+                address: "Block 16 Lot 14 Kaypian Rd. Phase M, Francisco Homes, Barangay Guijo, San Jose Del Monte, Philippines, 3023",
+                mapsUrl: "https://maps.google.com/?q=Francisco+Homes+Barangay+Guijo+San+Jose+Del+Monte",
+                tel: "0954 345 1237",
+                email: "moonlightphotostudio021521@gmail.com",
+                fb: "https://www.facebook.com/share/1CfMMV2jbg/",
+                hasExtraSocials: false
+            }
+        };
+
+        function switchBranch(branchKey) {
+            const data = branchContent[branchKey];
+            if(!data) return;
+
+            // Sync URL routing hash marker silently without pushing history stacking errors
+            window.location.hash = branchKey;
+
+            document.body.classList.remove('branch-little-moon', 'branch-self-portrait');
+
+            if(branchKey === 'little-moon') document.body.classList.add('branch-little-moon');
+            if(branchKey === 'self-portrait') document.body.classList.add('branch-self-portrait');
+
+            // Category collection visibility toggles based on active branch
+            document.querySelectorAll('.category-container').forEach(container => {
+                const key = container.getAttribute('data-category');
+                if (branchKey === 'self-portrait') {
+                    if (key !== 'solo' && key !== 'barkada') {
+                        container.classList.add('hide-on-self-portrait');
+                    } else {
+                        container.classList.remove('hide-on-self-portrait');
+                    }
+                } else {
+                    if (key === 'barkada') {
+                        container.classList.add('show-only-on-self-portrait');
+                    } else {
+                        container.classList.remove('hide-on-self-portrait');
+                    }
+                }
+            });
+
+            // Update UI elements
+            document.getElementById('heroTitle').innerHTML = data.title;
+            document.getElementById('heroLogoDisk').style.backgroundImage = `url('${data.logo}')`;
+            document.getElementById('aboutTitle').innerText = data.aboutTitle;
+            document.getElementById('aboutDesc').innerText = data.aboutDesc;
+
+            const addrLink = document.getElementById('contactAddrLink');
+            addrLink.innerText = data.address;
+            addrLink.href = data.mapsUrl;
+            document.getElementById('contactPhone').innerHTML = `<strong>Tel:</strong> ${data.tel}`;
+            document.getElementById('contactEmail').innerHTML = `<strong>Email:</strong> <a href="mailto:${data.email}">${data.email}</a>`;
+            
+            const socialsContainer = document.getElementById('contactSocials');
+            if (data.hasExtraSocials) {
+                socialsContainer.innerHTML = `
+                    <a href="${data.fb}" target="_blank">Facebook Page</a>
+                    <a href="https://www.instagram.com/moonlightphoto.studio" target="_blank">Instagram</a>
+                    <a href="https://www.youtube.com/@moonlightphotostudio3203" target="_blank">YouTube Channel</a>
+                `;
+            } else {
+                socialsContainer.innerHTML = `<a href="${data.fb}" target="_blank">Facebook Page</a>`;
+            }
+
+            document.getElementById('home').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // --- DEEP LINKING URL FLOW CONTROLLER ---
+        window.addEventListener('DOMContentLoaded', () => {
+            const URLHash = window.location.hash.replace('#', '');
+            if(URLHash && branchContent[URLHash]) {
+                switchBranch(URLHash);
+            }
+        });
+
         discoverBtn.addEventListener('click', () => {
             servicesSection.scrollIntoView({ behavior: 'smooth' });
         });
@@ -627,7 +974,7 @@
                     const imgNode = item.querySelector('img');
                     if (imgNode) {
                         const filename = imgNode.getAttribute('src');
-                        currentActiveList = imageDatabase[categoryKey];
+                        currentActiveList = imageDatabase[categoryKey] || [];
                         currentImgIndex = currentActiveList.indexOf(filename);
                         if (currentImgIndex === -1) currentImgIndex = 0; 
                         openLightbox();
@@ -636,23 +983,27 @@
             });
 
             container.querySelector('.btn-see-more').addEventListener('click', () => {
-                currentActiveList = imageDatabase[categoryKey];
+                currentActiveList = imageDatabase[categoryKey] || [];
                 currentImgIndex = 0;
                 openLightbox();
             });
         });
 
         function openLightbox() {
+            if(!currentActiveList || currentActiveList.length === 0) return;
             updateLightboxView();
             lightbox.classList.add('active');
         }
 
         function updateLightboxView() {
-            lightboxImg.src = currentActiveList[currentImgIndex];
+            if(currentActiveList.length > 0) {
+                lightboxImg.src = currentActiveList[currentImgIndex];
+            }
         }
 
         nextBtn.addEventListener('click', (e) => {
             e.stopPropagation();
+            if(!currentActiveList.length) return;
             currentImgIndex = (currentImgIndex + 1) % currentActiveList.length;
             updateLightboxView();
         });
