@@ -60,6 +60,7 @@
         body.branch-self-portrait .hide-on-self-portrait {
             display: none !important;
         }
+
         body:not(.branch-self-portrait) .show-only-on-self-portrait {
             display: none !important;
         }
@@ -67,6 +68,7 @@
         body.branch-little-moon .hide-on-little-moon {
             display: none !important;
         }
+
         body:not(.branch-little-moon) .show-only-on-little-moon {
             display: none !important;
         }
@@ -672,12 +674,15 @@
                 </div>
                 <div class="carousel-wrapper">
                     <div class="carousel">
-                        <div class="carousel-item"><img src="images/Barkada/barkada1.jpg" alt="Barkada 1"></div>
-                        <div class="carousel-item"><img src="images/Barkada/barkada2.jpg" alt="Barkada 2"></div>
-                        <div class="carousel-item"><img src="images/Barkada/barkada3.jpg" alt="Barkada 3"></div>
-                        <div class="carousel-item"><img src="images/Barkada/barkada1.jpg"></div>
-                        <div class="carousel-item"><img src="images/Barkada/barkada2.jpg"></div>
-                        <div class="carousel-item"><img src="images/Barkada/barkada3.jpg"></div>
+                        <div class="carousel-item"><img src="images3/barkada/barkada1.jpg" alt="Barkada 1"></div>
+                        <div class="carousel-item"><img src="images3/barkada/barkada2.jpg" alt="Barkada 2"></div>
+                        <div class="carousel-item"><img src="images3/barkada/barkada3.jpg" alt="Barkada 3"></div>
+                        <div class="carousel-item"><img src="images3/barkada/barkada4.jpg" alt="Barkada 4"></div>
+                        <div class="carousel-item"><img src="images3/barkada/barkada5.jpg" alt="Barkada 5"></div>
+                        <div class="carousel-item"><img src="images3/barkada/barkada6.jpg" alt="Barkada 6"></div>
+                        <div class="carousel-item"><img src="images3/barkada/barkada1.jpg"></div>
+                        <div class="carousel-item"><img src="images3/barkada/barkada2.jpg"></div>
+                        <div class="carousel-item"><img src="images3/barkada/barkada3.jpg"></div>
                     </div>
                 </div>
                 <div class="see-more-area"><button class="btn-see-more">See More</button></div>
@@ -686,10 +691,11 @@
             <!-- SHARED CATEGORY: SOLO (VISIBLE ON MOONLIGHT & SELF PORTRAIT - HIDDEN ON LITTLE MOON) -->
             <div class="category-container hide-on-little-moon" data-category="solo">
                 <div class="category-title-bar">
-                    <h3>Solo / Portraits</h3>
+                    <h3 id="soloTitleText">Solo / Portraits</h3>
                 </div>
                 <div class="carousel-wrapper">
-                    <div class="carousel">
+                    <div class="carousel" id="soloCarouselContainer">
+                        <!-- Default Moonlight content populated initially -->
                         <div class="carousel-item"><img src="images/Solo/solo1.jpg" alt="Solo 1"></div>
                         <div class="carousel-item"><img src="images/Solo/solo2.jpg" alt="Solo 2"></div>
                         <div class="carousel-item"><img src="images/Solo/solo3.jpg" alt="Solo 3"></div>
@@ -891,10 +897,10 @@
             family: Array.from({length: 9}, (_, i) => `images/Family/fam${i+1}.jpg`),
             solo: Array.from({length: 21}, (_, i) => `images/Solo/solo${i+1}.jpg`),
             couple: Array.from({length: 4}, (_, i) => `images/Couple/couple${i+1}.jpg`),
-            barkada: Array.from({length: 3}, (_, i) => `images/Barkada/barkada${i+1}.jpg`),
-            // Little Moon specific image asset registration arrays
+            barkada: Array.from({length: 12}, (_, i) => `images3/barkada/barkada${i+1}.jpg`),
             kidfamily: Array.from({length: 12}, (_, i) => `images2/kidfamily/kidfamily${i+1}.jpg`),
-            kidsolo: Array.from({length: 12}, (_, i) => `images2/kidsolo/kid${i+1}.jpg`)
+            kidsolo: Array.from({length: 12}, (_, i) => `images2/kidsolo/kid${i+1}.jpg`),
+            soloportrait: Array.from({length: 7}, (_, i) => `images3/soloportrait/soloport${i+1}.jpg`)
         };
 
         let currentActiveList = [];
@@ -908,6 +914,7 @@
         const prevBtn = document.getElementById('prevBtn');
         const nextBtn = document.getElementById('nextBtn');
 
+        // Multi-Branch Copy Content Database
         const branchContent = {
             'moonlight': {
                 title: "Moonlight<br>Photo Studio",
@@ -953,17 +960,50 @@
 
             window.location.hash = branchKey;
 
-            // Reset branch layout visibility modifiers completely
             document.body.classList.remove('branch-little-moon', 'branch-self-portrait');
 
             if(branchKey === 'little-moon') document.body.classList.add('branch-little-moon');
             if(branchKey === 'self-portrait') document.body.classList.add('branch-self-portrait');
 
-            // Category collections view visibility filter routing
+            // Dynamic Carousel Ribbon Builder & Header Label Toggle
+            const soloTitle = document.getElementById('soloTitleText');
+            const soloCarousel = document.getElementById('soloCarouselContainer');
+
+            if (branchKey === 'self-portrait') {
+                soloTitle.innerText = "Solo Portraits";
+                soloCarousel.innerHTML = `
+                    <div class="carousel-item"><img src="images3/soloportrait/soloport1.jpg" alt="Solo 1"></div>
+                    <div class="carousel-item"><img src="images3/soloportrait/soloport2.jpg" alt="Solo 2"></div>
+                    <div class="carousel-item"><img src="images3/soloportrait/soloport3.jpg" alt="Solo 3"></div>
+                    <div class="carousel-item"><img src="images3/soloportrait/soloport4.jpg" alt="Solo 4"></div>
+                    <div class="carousel-item"><img src="images3/soloportrait/soloport5.jpg" alt="Solo 5"></div>
+                    <div class="carousel-item"><img src="images3/soloportrait/soloport6.jpg" alt="Solo 6"></div>
+                    <div class="carousel-item"><img src="images3/soloportrait/soloport1.jpg"></div>
+                    <div class="carousel-item"><img src="images3/soloportrait/soloport2.jpg"></div>
+                    <div class="carousel-item"><img src="images3/soloportrait/soloport3.jpg"></div>
+                `;
+            } else {
+                soloTitle.innerText = "Solo / Portraits";
+                soloCarousel.innerHTML = `
+                    <div class="carousel-item"><img src="images/Solo/solo1.jpg" alt="Solo 1"></div>
+                    <div class="carousel-item"><img src="images/Solo/solo2.jpg" alt="Solo 2"></div>
+                    <div class="carousel-item"><img src="images/Solo/solo3.jpg" alt="Solo 3"></div>
+                    <div class="carousel-item"><img src="images/Solo/solo4.jpg" alt="Solo 4"></div>
+                    <div class="carousel-item"><img src="images/Solo/solo5.jpg" alt="Solo 5"></div>
+                    <div class="carousel-item"><img src="images/Solo/solo6.jpg" alt="Solo 6"></div>
+                    <div class="carousel-item"><img src="images/Solo/solo1.jpg"></div>
+                    <div class="carousel-item"><img src="images/Solo/solo2.jpg"></div>
+                    <div class="carousel-item"><img src="images/Solo/solo3.jpg"></div>
+                `;
+            }
+
+            // Re-apply event listeners to dynamically swapped carousel item blocks
+            setupCarouselClickListeners();
+
+            // Symmetrical Branch Visibility Filter Routing Mechanics
             document.querySelectorAll('.category-container').forEach(container => {
                 const key = container.getAttribute('data-category');
                 
-                // Clear any leftover modifier flags
                 container.classList.remove('hide-on-self-portrait', 'show-only-on-self-portrait', 'hide-on-little-moon', 'show-only-on-little-moon');
 
                 if (branchKey === 'self-portrait') {
@@ -975,7 +1015,6 @@
                         container.classList.add('hide-on-little-moon');
                     }
                 } else {
-                    // Main Branch context default visibility layout
                     if (key === 'barkada') {
                         container.classList.add('show-only-on-self-portrait');
                     }
@@ -985,7 +1024,7 @@
                 }
             });
 
-            // Update DOM copy strings
+            // Update UI element copy blocks
             document.getElementById('heroTitle').innerHTML = data.title;
             document.getElementById('heroLogoDisk').style.backgroundImage = `url('${data.logo}')`;
             document.getElementById('aboutTitle').innerText = data.aboutTitle;
@@ -1015,6 +1054,8 @@
             const URLHash = window.location.hash.replace('#', '');
             if(URLHash && branchContent[URLHash]) {
                 switchBranch(URLHash);
+            } else {
+                setupCarouselClickListeners();
             }
         });
 
@@ -1022,28 +1063,49 @@
             servicesSection.scrollIntoView({ behavior: 'smooth' });
         });
 
-        document.querySelectorAll('.category-container').forEach(container => {
-            const categoryKey = container.getAttribute('data-category');
-            
-            container.querySelectorAll('.carousel-item').forEach(item => {
-                item.addEventListener('click', () => {
-                    const imgNode = item.querySelector('img');
-                    if (imgNode) {
-                        const filename = imgNode.getAttribute('src');
-                        currentActiveList = imageDatabase[categoryKey] || [];
-                        currentImgIndex = currentActiveList.indexOf(filename);
-                        if (currentImgIndex === -1) currentImgIndex = 0; 
-                        openLightbox();
+        function setupCarouselClickListeners() {
+            document.querySelectorAll('.category-container').forEach(container => {
+                let categoryKey = container.getAttribute('data-category');
+                
+                container.querySelectorAll('.carousel-item').forEach(item => {
+                    // Remove old click instances to prevent multi-firing ghost bugs
+                    item.replaceWith(item.cloneNode(true));
+                });
+
+                // Re-fetch clean reference tags
+                container.querySelectorAll('.carousel-item').forEach(item => {
+                    item.addEventListener('click', () => {
+                        const imgNode = item.querySelector('img');
+                        if (imgNode) {
+                            const filename = imgNode.getAttribute('src');
+                            
+                            // Context database redirection map pointer rules for shared categories
+                            let activeKey = categoryKey;
+                            if (categoryKey === 'solo' && window.location.hash === '#self-portrait') {
+                                activeKey = 'soloportrait';
+                            }
+
+                            currentActiveList = imageDatabase[activeKey] || [];
+                            currentImgIndex = currentActiveList.indexOf(filename);
+                            if (currentImgIndex === -1) currentImgIndex = 0; 
+                            openLightbox();
+                        }
+                    });
+                });
+
+                const seeMoreBtn = container.querySelector('.btn-see-more');
+                seeMoreBtn.replaceWith(seeMoreBtn.cloneNode(true));
+                container.querySelector('.btn-see-more').addEventListener('click', () => {
+                    let activeKey = categoryKey;
+                    if (categoryKey === 'solo' && window.location.hash === '#self-portrait') {
+                        activeKey = 'soloportrait';
                     }
+                    currentActiveList = imageDatabase[activeKey] || [];
+                    currentImgIndex = 0;
+                    openLightbox();
                 });
             });
-
-            container.querySelector('.btn-see-more').addEventListener('click', () => {
-                currentActiveList = imageDatabase[categoryKey] || [];
-                currentImgIndex = 0;
-                openLightbox();
-            });
-        });
+        }
 
         function openLightbox() {
             if(!currentActiveList || currentActiveList.length === 0) return;
