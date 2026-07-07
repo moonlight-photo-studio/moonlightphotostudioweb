@@ -56,12 +56,18 @@
             --header-text: #4a2e35;
         }
 
-        /* Branch filtering classes managed through state logic */
+        /* Branch visibility modifier rules toggled inside script logic */
         body.branch-self-portrait .hide-on-self-portrait {
             display: none !important;
         }
-
         body:not(.branch-self-portrait) .show-only-on-self-portrait {
+            display: none !important;
+        }
+
+        body.branch-little-moon .hide-on-little-moon {
+            display: none !important;
+        }
+        body:not(.branch-little-moon) .show-only-on-little-moon {
             display: none !important;
         }
 
@@ -617,8 +623,50 @@
                 <p>Explore curated studio frames crafted carefully to preserve your finest stories.</p>
             </div>
 
-            <!-- CATEGORY: BARKADA (SHOWS ONLY ON SELF PORTRAIT) -->
-            <div class="category-container show-only-on-self-portrait" data-category="barkada">
+            <!-- LITTLE MOON CATEGORY 1: KID FAMILY (SHOWS ONLY ON LITTLE MOON) -->
+            <div class="category-container show-only-on-little-moon" data-category="kidfamily">
+                <div class="category-title-bar">
+                    <h3>Kid Family Portraits</h3>
+                </div>
+                <div class="carousel-wrapper">
+                    <div class="carousel">
+                        <div class="carousel-item"><img src="images2/kidfamily/kidfamily1.jpg" alt="Kid Family 1"></div>
+                        <div class="carousel-item"><img src="images2/kidfamily/kidfamily2.jpg" alt="Kid Family 2"></div>
+                        <div class="carousel-item"><img src="images2/kidfamily/kidfamily3.jpg" alt="Kid Family 3"></div>
+                        <div class="carousel-item"><img src="images2/kidfamily/kidfamily4.jpg" alt="Kid Family 4"></div>
+                        <div class="carousel-item"><img src="images2/kidfamily/kidfamily5.jpg" alt="Kid Family 5"></div>
+                        <div class="carousel-item"><img src="images2/kidfamily/kidfamily6.jpg" alt="Kid Family 6"></div>
+                        <div class="carousel-item"><img src="images2/kidfamily/kidfamily1.jpg"></div>
+                        <div class="carousel-item"><img src="images2/kidfamily/kidfamily2.jpg"></div>
+                        <div class="carousel-item"><img src="images2/kidfamily/kidfamily3.jpg"></div>
+                    </div>
+                </div>
+                <div class="see-more-area"><button class="btn-see-more">See More</button></div>
+            </div>
+
+            <!-- LITTLE MOON CATEGORY 2: KID SOLO (SHOWS ONLY ON LITTLE MOON) -->
+            <div class="category-container show-only-on-little-moon" data-category="kidsolo">
+                <div class="category-title-bar">
+                    <h3>Kid Solo Portraits</h3>
+                </div>
+                <div class="carousel-wrapper">
+                    <div class="carousel">
+                        <div class="carousel-item"><img src="images2/kidsolo/kid1.jpg" alt="Kid Solo 1"></div>
+                        <div class="carousel-item"><img src="images2/kidsolo/kid2.jpg" alt="Kid Solo 2"></div>
+                        <div class="carousel-item"><img src="images2/kidsolo/kid3.jpg" alt="Kid Solo 3"></div>
+                        <div class="carousel-item"><img src="images2/kidsolo/kid4.jpg" alt="Kid Solo 4"></div>
+                        <div class="carousel-item"><img src="images2/kidsolo/kid5.jpg" alt="Kid Solo 5"></div>
+                        <div class="carousel-item"><img src="images2/kidsolo/kid6.jpg" alt="Kid Solo 6"></div>
+                        <div class="carousel-item"><img src="images2/kidsolo/kid1.jpg"></div>
+                        <div class="carousel-item"><img src="images2/kidsolo/kid2.jpg"></div>
+                        <div class="carousel-item"><img src="images2/kidsolo/kid3.jpg"></div>
+                    </div>
+                </div>
+                <div class="see-more-area"><button class="btn-see-more">See More</button></div>
+            </div>
+
+            <!-- SELF PORTRAIT CATEGORY: BARKADA (SHOWS ONLY ON SELF PORTRAIT) -->
+            <div class="category-container show-only-on-self-portrait hide-on-little-moon" data-category="barkada">
                 <div class="category-title-bar">
                     <h3>Barkada Series</h3>
                 </div>
@@ -635,8 +683,8 @@
                 <div class="see-more-area"><button class="btn-see-more">See More</button></div>
             </div>
 
-            <!-- CATEGORY: SOLO -->
-            <div class="category-container" data-category="solo">
+            <!-- SHARED CATEGORY: SOLO (VISIBLE ON MOONLIGHT & SELF PORTRAIT - HIDDEN ON LITTLE MOON) -->
+            <div class="category-container hide-on-little-moon" data-category="solo">
                 <div class="category-title-bar">
                     <h3>Solo / Portraits</h3>
                 </div>
@@ -648,16 +696,16 @@
                         <div class="carousel-item"><img src="images/Solo/solo4.jpg" alt="Solo 4"></div>
                         <div class="carousel-item"><img src="images/Solo/solo5.jpg" alt="Solo 5"></div>
                         <div class="carousel-item"><img src="images/Solo/solo6.jpg" alt="Solo 6"></div>
-                        <div class="carousel-item"><img src="images/Solo/solo7.jpg"></div>
-                        <div class="carousel-item"><img src="images/Solo/solo8.jpg"></div>
-                        <div class="carousel-item"><img src="images/Solo/solo9.jpg"></div>
+                        <div class="carousel-item"><img src="images/Solo/solo1.jpg"></div>
+                        <div class="carousel-item"><img src="images/Solo/solo2.jpg"></div>
+                        <div class="carousel-item"><img src="images/Solo/solo3.jpg"></div>
                     </div>
                 </div>
                 <div class="see-more-area"><button class="btn-see-more">See More</button></div>
             </div>
 
-            <!-- CATEGORY: GRADUATION (HIDE ON SELF PORTRAIT) -->
-            <div class="category-container hide-on-self-portrait" data-category="graduation">
+            <!-- MOONLIGHT CATEGORY: GRADUATION (HIDE ON SELF PORTRAIT & LITTLE MOON) -->
+            <div class="category-container hide-on-self-portrait hide-on-little-moon" data-category="graduation">
                 <div class="category-title-bar">
                     <h3>Graduation Series</h3>
                 </div>
@@ -677,8 +725,8 @@
                 <div class="see-more-area"><button class="btn-see-more">See More</button></div>
             </div>
 
-            <!-- CATEGORY: PRE-NUP (HIDE ON SELF PORTRAIT) -->
-            <div class="category-container hide-on-self-portrait" data-category="prenup">
+            <!-- MOONLIGHT CATEGORY: PRE-NUP (HIDE ON SELF PORTRAIT & LITTLE MOON) -->
+            <div class="category-container hide-on-self-portrait hide-on-little-moon" data-category="prenup">
                 <div class="category-title-bar">
                     <h3>Pre-Nup Session</h3>
                 </div>
@@ -698,8 +746,8 @@
                 <div class="see-more-area"><button class="btn-see-more">See More</button></div>
             </div>
 
-            <!-- CATEGORY: MATERNITY (HIDE ON SELF PORTRAIT) -->
-            <div class="category-container hide-on-self-portrait" data-category="maternity">
+            <!-- MOONLIGHT CATEGORY: MATERNITY (HIDE ON SELF PORTRAIT & LITTLE MOON) -->
+            <div class="category-container hide-on-self-portrait hide-on-little-moon" data-category="maternity">
                 <div class="category-title-bar">
                     <h3>Maternity</h3>
                 </div>
@@ -719,8 +767,8 @@
                 <div class="see-more-area"><button class="btn-see-more">See More</button></div>
             </div>
 
-            <!-- CATEGORY: NEWBORN (HIDE ON SELF PORTRAIT) -->
-            <div class="category-container hide-on-self-portrait" data-category="newborn">
+            <!-- MOONLIGHT CATEGORY: NEWBORN (HIDE ON SELF PORTRAIT & LITTLE MOON) -->
+            <div class="category-container hide-on-self-portrait hide-on-little-moon" data-category="newborn">
                 <div class="category-title-bar">
                     <h3>Newborn</h3>
                 </div>
@@ -740,8 +788,8 @@
                 <div class="see-more-area"><button class="btn-see-more">See More</button></div>
             </div>
 
-            <!-- CATEGORY: FAMILY (HIDE ON SELF PORTRAIT) -->
-            <div class="category-container hide-on-self-portrait" data-category="family">
+            <!-- MOONLIGHT CATEGORY: FAMILY (HIDE ON SELF PORTRAIT & LITTLE MOON) -->
+            <div class="category-container hide-on-self-portrait hide-on-little-moon" data-category="family">
                 <div class="category-title-bar">
                     <h3>Family Portraits</h3>
                 </div>
@@ -761,8 +809,8 @@
                 <div class="see-more-area"><button class="btn-see-more">See More</button></div>
             </div>
 
-            <!-- CATEGORY: COUPLE (HIDE ON SELF PORTRAIT) -->
-            <div class="category-container hide-on-self-portrait" data-category="couple">
+            <!-- MOONLIGHT CATEGORY: COUPLE (HIDE ON SELF PORTRAIT & LITTLE MOON) -->
+            <div class="category-container hide-on-self-portrait hide-on-little-moon" data-category="couple">
                 <div class="category-title-bar">
                     <h3>Couple Portfolio</h3>
                 </div>
@@ -835,7 +883,6 @@
 
     <!-- INTERACTIVE BEHAVIORS SCRIPT -->
     <script>
-        // Expanded image source indices tracking parameters perfectly
         const imageDatabase = {
             graduation: Array.from({length: 24}, (_, i) => `images/Graduation Photo/grad${i+1}.jpg`),
             prenup: Array.from({length: 9}, (_, i) => `images/Pre-nup/prenup${i+1}.jpg`),
@@ -844,7 +891,10 @@
             family: Array.from({length: 9}, (_, i) => `images/Family/fam${i+1}.jpg`),
             solo: Array.from({length: 21}, (_, i) => `images/Solo/solo${i+1}.jpg`),
             couple: Array.from({length: 4}, (_, i) => `images/Couple/couple${i+1}.jpg`),
-            barkada: Array.from({length: 3}, (_, i) => `images/Barkada/barkada${i+1}.jpg`)
+            barkada: Array.from({length: 3}, (_, i) => `images/Barkada/barkada${i+1}.jpg`),
+            // Little Moon specific image asset registration arrays
+            kidfamily: Array.from({length: 12}, (_, i) => `images2/kidfamily/kidfamily${i+1}.jpg`),
+            kidsolo: Array.from({length: 12}, (_, i) => `images2/kidsolo/kid${i+1}.jpg`)
         };
 
         let currentActiveList = [];
@@ -858,7 +908,6 @@
         const prevBtn = document.getElementById('prevBtn');
         const nextBtn = document.getElementById('nextBtn');
 
-        // Multi-Branch Copy Content Database (Includes deep hash reference keys)
         const branchContent = {
             'moonlight': {
                 title: "Moonlight<br>Photo Studio",
@@ -902,33 +951,41 @@
             const data = branchContent[branchKey];
             if(!data) return;
 
-            // Sync URL routing hash marker silently without pushing history stacking errors
             window.location.hash = branchKey;
 
+            // Reset branch layout visibility modifiers completely
             document.body.classList.remove('branch-little-moon', 'branch-self-portrait');
 
             if(branchKey === 'little-moon') document.body.classList.add('branch-little-moon');
             if(branchKey === 'self-portrait') document.body.classList.add('branch-self-portrait');
 
-            // Category collection visibility toggles based on active branch
+            // Category collections view visibility filter routing
             document.querySelectorAll('.category-container').forEach(container => {
                 const key = container.getAttribute('data-category');
+                
+                // Clear any leftover modifier flags
+                container.classList.remove('hide-on-self-portrait', 'show-only-on-self-portrait', 'hide-on-little-moon', 'show-only-on-little-moon');
+
                 if (branchKey === 'self-portrait') {
                     if (key !== 'solo' && key !== 'barkada') {
                         container.classList.add('hide-on-self-portrait');
-                    } else {
-                        container.classList.remove('hide-on-self-portrait');
+                    }
+                } else if (branchKey === 'little-moon') {
+                    if (key !== 'kidfamily' && key !== 'kidsolo') {
+                        container.classList.add('hide-on-little-moon');
                     }
                 } else {
+                    // Main Branch context default visibility layout
                     if (key === 'barkada') {
                         container.classList.add('show-only-on-self-portrait');
-                    } else {
-                        container.classList.remove('hide-on-self-portrait');
+                    }
+                    if (key === 'kidfamily' || key === 'kidsolo') {
+                        container.classList.add('show-only-on-little-moon');
                     }
                 }
             });
 
-            // Update UI elements
+            // Update DOM copy strings
             document.getElementById('heroTitle').innerHTML = data.title;
             document.getElementById('heroLogoDisk').style.backgroundImage = `url('${data.logo}')`;
             document.getElementById('aboutTitle').innerText = data.aboutTitle;
@@ -954,7 +1011,6 @@
             document.getElementById('home').scrollIntoView({ behavior: 'smooth' });
         }
 
-        // --- DEEP LINKING URL FLOW CONTROLLER ---
         window.addEventListener('DOMContentLoaded', () => {
             const URLHash = window.location.hash.replace('#', '');
             if(URLHash && branchContent[URLHash]) {
